@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Index Page</title>
+    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
+    <style>
+        .swiper-container {
+            width: 95%;
+            height: 400px;
+            margin: 20px auto;
+        }
+
+        .swiper-slide {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 200px;
+            height: 300px;
+        }
+
+        .swiper-slide img {
+            width: 100%;
+            height: auto;
+        }
+        /* Other styles */
+        .search-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            width: 95%;
+            margin: 0px auto;
+        }
+      
+        .search-input {
+            flex: 1;
+            padding: 10px;
+            font-size: 16px;
+            border: none;
+            width: 80%;
+            margin: 0px 10%;
+        }
+      
+        .search-icon {
+            font-size: 18px;
+            color: #666;
+            margin-left: 10px;
+        }
+
+        .container {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            height: 200px;
+            width: 100%;
+        }
+
+        .ebook, .audiobook, .singin, .create {
+            width: 40%;
+            text-align: center;
+            padding: 10px;
+            border-bottom: 4px solid red;
+        }
+
+        .singin, .create {
+            border: none;
+            width: 45%;
+        }
+
+        .middle {
+            font-weight: bolder;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <div>
+            <h1>G-Academy</h1>
+        </div>
+        
+        <div class="search-bar">
+            <input type="search" placeholder="Search" class="search-input">
+            <span class="search-icon"></span>
+        </div>
+        
+        <div class="container">
+            <div class="ebook">ebook</div>
+            <div class="audiobook">audiobook</div>
+        </div>
+        
+        <!-- Swiper container -->
+        <div class="swiper-container">
+            <div class="swiper-wrapper">
+                <% books.forEach(function(book) { %>
+                    <div class="swiper-slide">
+                        <img src='<%= book.image %>' alt="<%= book.title %>">
+                    </div>
+                <% }); %>
+            </div>
+            
+            <!-- Add Pagination -->
+            <div class="swiper-pagination"></div>
+            
+            <!-- Add Navigation -->
+            <div class="swiper-button-next"></div>
+            <div class="swiper-button-prev"></div>
+        </div>
+        
+        <!-- registration div -->
+        <div class="container">
+            <div class="ebook singin">SIGN IN</div>
+            <div class="middle"> |</div>
+            <div class="create">CREATE ACCOUNT</div>
+        </div>
+    </div>
+
+    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+    <script>
+        var swiper = new Swiper('.swiper-container', {
+            slidesPerView: 1,
+            spaceBetween: 10,
+            navigation: {
+                nextEl: '.swiper-button-next',
+                prevEl: '.swiper-button-prev',
+            },
+            pagination: {
+                el: '.swiper-pagination',
+                clickable: true,
+            },
+            breakpoints: {
+                640: {
+                    slidesPerView: 2,
+                    spaceBetween: 20,
+                },
+                768: {
+                    slidesPerView: 3,
+                    spaceBetween: 30,
+                },
+                1024: {
+                    slidesPerView: 4,
+                    spaceBetween: 40,
+                },
+            },
+        });
+    </script>
+</body>
+</html>

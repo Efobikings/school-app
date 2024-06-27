@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PDF.js Example</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.0.279/pdf.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        #controls {
+            position: fixed;
+            right: 10%;
+            left: 10%;
+            padding: 5px;
+            border: 2px solid transparent;
+            display: flex;
+            justify-content: space-around;
+        }
+        .button {
+            padding: 10px;
+            border-radius: 10px;
+            color: white;
+            background: #000;
+            cursor: pointer;
+        }
+        #pdf-canvas {
+            width: 80vh;
+            height: 120vh;
+            padding: 0 auto;
+        }
+        #image-div {
+            display: flex;
+            border: 2px solid black;
+            height: 90vh;
+            width: 80vh;
+            padding: 10px;
+            justify-content: center;
+            align-items: center;
+        }
+    </style>
+</head>
+<body>
+    <div id="controls">
+        <button class="button" id="decrementButton-btn">Prev Page</button>
+        <button class="button" id="incrementButton-btn">Next Page</button>
+    </div>
+    <div id="image-div">
+        <img src="/image/bookcover.jpg" alt="" style="width:100vh; height: 100vh;">
+    </div>
+    <div>
+        <canvas id="pdf-canvas"></canvas>
+    </div>
+    <p id="count-display">Page: </p>
+    <script>
+        const url = '/pdf/faith-bible-study-guide-kenneth-e-hagin-1.pdf';  // PDF URL
+        let pdfDoc = null,
+            pageNum = 1,
+            pageRendering = false,
+            pageNumPending = null,
+            scale = 1.5,
+            canvas = document.getElementById('pdf-canvas'),
+            ctx = canvas.getContext('2d');
+
+        function renderPage(num) {
+            pageRendering = true;
+            pdfDoc.getPage(num).then((page) => {
+                const viewport = page.getViewport({ scale });
+                canvas.height = viewport.height;
+                canvas.width = viewport.width;
+
+                const renderContext = {
+                    canvasContext: ctx,
+                    viewport: viewport,
+                };
+                const renderTask = page.render(renderContext);
+
+                renderTask.promise.then(() => {
+                    pageRendering = false;
+                    if (pageNumPending !== null) {
+                        renderPage(pageNumPending);
+                        pageNumPending = null;
+                    }
+                });
+            }).catch((error) => {
+                console.error('Error rendering page:', error);
+            });
+
+            document.getElementById('count-display').textContent = `Page: ${num}/${pdfDoc.numPages}`;
+        }
+
+        function queueRenderPage(num) {
+            if (pageRendering) {
+                pageNumPending = num;
+            } else {
+                renderPage(num);
+            }
+        }
+
+        function onPrevPage() {
+            if (pageNum <= 1) {
+                return;
+            }
+            pageNum--;
+            queueRenderPage(pageNum);
+        }
+
+        function onNextPage() {
+            if (pageNum >= pdfDoc.numPages) {
+                return;
+            }
+            pageNum++;
+            queueRenderPage(pageNum);
+        }
+
+        document.getElementById('decrementButton-btn').addEventListener('click', onPrevPage);
+        document.getElementById('incrementButton-btn').addEventListener('click', onNextPage);
+
+        pdfjsLib.getDocument(url).promise.then((pdfDoc_) => {
+            pdfDoc = pdfDoc_;
+            document.getElementById('count-display').textContent = `Page: ${pageNum}/${pdfDoc.numPages}`;
+            renderPage(pageNum);
+        }).catch((error) => {
+            console.error('Error loading PDF:', error);
+        });
+    </script>
+</body>
+</html>

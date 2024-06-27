@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title %></title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            display: flex;
+            justify-content: center;
+        }
+        
+        .login-container {
+            margin-top: 15vh;
+            margin-bottom: 15vh;
+            padding: 20px;
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .login-box {
+            text-align: center;
+            height: 50vh;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        h2 {
+            margin-top: 0;
+        }
+        
+        form {
+            width: 100%;
+        }
+        
+        input[type="text"], input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+        }
+        
+        input[type="submit"] {
+            width: 100%;
+            padding: 10px;
+            background-color: #4CAF50;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        
+        input[type="submit"]:hover {
+            background-color: #3e8e41;
+        }
+        
+        p {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        
+        a {
+            text-decoration: none;
+            color: #4CAF50;
+        }
+        
+        a:hover {
+            color: #3e8e41;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <div class="login-box">
+            <h2>Login</h2>
+            <form action="<%= formAction %>" method="POST">
+                <input type="text" placeholder="Username" id="username" name="username" required><br><br>
+                <input type="password" placeholder="Password" id="password" name="password" required><br><br>
+                <input type="submit" value="Login">
+            </form>
+            <p>Don't have an account? <a href="<%= signupLink %>">Sign up</a></p>
+        </div>
+    </div>
+</body>
+</html>

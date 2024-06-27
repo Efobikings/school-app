@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PDF.js Example</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.0.279/pdf.min.js"></script>
+</head>
+<body>
+    <div style="margin: 0px auto; position:fixed; right: 10%; left: 10%; padding: 5px; border: 2px solid transparent; display: flex;
+     justify-content: space-around; ">
+        <button  style="padding: 10px; border-radius: 10px; color: white; background: #000;" id="decrementButton-btn">pre Page</button>
+        <button style="padding: 10px; border-radius: 10px; color: white; background: #000;" id="incrementButton-btn" >Next page</button>
+    
+    </div>
+    <div id="image-div" stye="display:flex; border:2px solid black; height: 90vh; width: 80vh;
+    padding: 10px; auto; justify-content: center; justify-items: center; align-items: center">
+         <img src="public/image/bookcover.jpg" alt="" srcset="" style="width:100vh; height: 100vh;">
+    </div>
+   
+    <div style="display:flex; flex-direction: row; justify-content: center; border: 2p solid black;">
+          
+            
+             <canvas style="width: 80vh; height: 120vh; padding: 0px auto;" id="pdf-canvas">
+               
+             </canvas>
+             <br>
+             <br>
+     </div>
+     <p id="count-display" style="padding-top: 2px;">Count: </p>
+    <script src="pdf.js"></script>
+</body>
+</html>
